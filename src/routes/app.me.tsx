@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
+import { ShareLink } from "@/components/whispr/ShareLink";
 
 export const Route = createFileRoute("/app/me")({
   head: () => ({
@@ -13,7 +14,7 @@ export const Route = createFileRoute("/app/me")({
   component: MeScreen,
 });
 
-const settings = ["Edit profile", "Appearance", "Notifications"];
+const settings = ["Display name", "Username", "Bio", "Profile photo", "Appearance", "Notifications"];
 
 function MeScreen() {
   return (
@@ -26,7 +27,11 @@ function MeScreen() {
         <p className="text-[15px] text-muted-foreground">@nandith</p>
       </div>
 
-      <div className="rise card-soft mt-7 divide-y divide-border overflow-hidden">
+      <div className="rise mt-7">
+        <ShareLink username="nandith" />
+      </div>
+
+      <div className="rise card-soft mt-4 divide-y divide-border overflow-hidden">
         {settings.map((s) => (
           <button key={s} className="flex w-full items-center px-5 py-4 text-left transition-colors hover:bg-surface">
             <span className="flex-1 text-[16px] tracking-tight">{s}</span>
