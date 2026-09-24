@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronRight, Lock, MessageCircle, Sparkles } from "lucide-react";
+import { Lock, MessageCircle, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,21 +30,9 @@ function Landing() {
           <Link to="/" className="text-[17px] font-semibold tracking-tight">
             Whispr
           </Link>
-          <nav className="flex items-center gap-6 text-[13px] text-muted-foreground">
-            <a href="#how" className="hidden transition-colors hover:text-foreground sm:block">
-              How it works
-            </a>
-            <Link
-              to="/u/$username"
-              params={{ username: "nandith" }}
-              className="hidden transition-colors hover:text-foreground sm:block"
-            >
-              Demo link
-            </Link>
-            <Link to="/app" className="pill-primary px-4 py-1.5 text-[13px]">
-              Open app
-            </Link>
-          </nav>
+          <Link to="/app" className="text-[13px] text-primary">
+            Open app
+          </Link>
         </div>
       </header>
 
@@ -61,10 +49,7 @@ function Landing() {
           <Link to="/app" className="pill-primary px-7 py-3 text-[17px]">
             Create your Whispr
           </Link>
-          <a href="#how" className="group inline-flex items-center gap-1 px-3 py-3 text-[17px] text-primary">
-            Explore how it works
-            <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
+
         </div>
 
         <div className="rise mx-auto mt-16 w-full max-w-[340px]">
@@ -95,24 +80,7 @@ function Landing() {
         </div>
       </section>
 
-      <section className="px-5 py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="display-lg text-balance">Your link is the whole product.</h2>
-          <p className="lede mx-auto mt-5 max-w-[44ch] text-pretty">
-            Put it in your story, your bio, your group chat. Everything else happens inside Whispr.
-          </p>
-          <div className="card-soft mx-auto mt-10 flex max-w-md items-center gap-3 p-2 pl-5 text-left">
-            <span className="flex-1 truncate text-[17px] tracking-tight">whispr.app/@nandith</span>
-            <Link
-              to="/u/$username"
-              params={{ username: "nandith" }}
-              className="pill-primary px-5 py-2.5 text-[15px]"
-            >
-              Open
-            </Link>
-          </div>
-        </div>
-      </section>
+
 
       <footer className="border-t border-border px-5 py-10">
         <div className="mx-auto flex max-w-5xl items-center justify-between text-[12px] text-muted-foreground">

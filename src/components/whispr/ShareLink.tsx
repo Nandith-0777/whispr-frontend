@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check, Copy, Share } from "lucide-react";
+import { Check, Share } from "lucide-react";
 
 export function ShareLink({ username }: { username: string }) {
   const [copied, setCopied] = useState(false);
@@ -31,16 +31,10 @@ export function ShareLink({ username }: { username: string }) {
     <div className="card-soft p-5">
       <p className="text-[13px] font-medium tracking-tight text-muted-foreground">Your Whispr link</p>
       <p className="mt-1 truncate text-[19px] font-semibold tracking-tight">{link}</p>
-      <div className="mt-4 flex gap-2">
-        <button onClick={copy} className="pill-ghost flex flex-1 items-center justify-center gap-2 py-2.5 text-[15px]">
-          {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-          {copied ? "Copied" : "Copy link"}
-        </button>
-        <button onClick={share} className="pill-primary flex flex-1 items-center justify-center gap-2 py-2.5 text-[15px]">
-          <Share className="size-4" />
-          Share
-        </button>
-      </div>
+      <button onClick={share} className="pill-primary mt-4 flex w-full items-center justify-center gap-2 py-3 text-[15px]">
+        {copied ? <Check className="size-4" /> : <Share className="size-4" />}
+        {copied ? "Link copied" : "Share my link"}
+      </button>
     </div>
   );
 }
