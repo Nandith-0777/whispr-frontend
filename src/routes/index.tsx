@@ -58,15 +58,26 @@ function Onboarding() {
   const valid = /^[a-z0-9_.]{3,24}$/.test(username);
 
   const submit = async () => {
-    if (!valid || !platform || loading) return;
+    if (!valid || loading) return;
+
     try {
       setLoading(true);
       setError("");
+
       const data = await registerUser(username);
-      localStorage.setItem("whispr_session_token", data.session_token);
-      navigate({ to: "/app" });
+
+      localStorage.setItem(
+        "whispr_session_token",
+        data.session_token,
+      );
+
+      setStep(1);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong",
+      );
     } finally {
       setLoading(false);
     }
@@ -101,6 +112,68 @@ function Onboarding() {
         </div>
 
         {step === 0 ? (
+          <div key="u" className="pop flex flex-1 flex-col">
+            <h1 className="display-md mt-16 text-center text-balance">
+              Choose a username
+            </h1>
+
+            <p className="mt-2 text-center text-[15px] text-muted-foreground">
+              This becomes your Whispr link.
+            </p>
+
+            <div className="card-soft mt-10 flex items-center px-5 py-4">
+              <span className="text-[19px] tracking-tight text-muted-foreground">
+                @
+              </span>
+
+              <input
+                autoFocus
+                value={username}
+                onChange={(e) => {
+                  setUsername(
+                    e.target.value
+                      .toLowerCase()
+                      .replace(/\s/g, ""),
+                  );
+                  setError("");
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && valid) {
+                    submit();
+                  }
+                }}
+                placeholder="yourname"
+                maxLength={24}
+                className="ml-0.5 flex-1 bg-transparent text-[19px] tracking-tight outline-none placeholder:text-muted-foreground/60"
+              />
+
+              {valid && (
+                <Check
+                  className="size-5 text-primary"
+                  strokeWidth={2.2}
+                />
+              )}
+            </div>
+
+            <p className="mt-3 text-center text-[13px] text-muted-foreground">
+              whispr.app/@{username || "yourname"}
+            </p>
+
+            {error && (
+              <p className="mt-3 text-center text-sm text-destructive">
+                {error}
+              </p>
+            )}
+
+            <button
+              disabled={!valid || loading}
+              onClick={submit}
+              className="pill-primary mt-auto w-full py-4 text-[17px] disabled:opacity-40"
+            >
+              {loading ? "Checking username..." : "Continue"}
+            </button>
+          </div>
+        ) : (
           <div key="p" className="pop flex flex-1 flex-col">
             <h1 className="display-md mt-16 text-center text-balance">
               Where will you share Whispr?
@@ -151,67 +224,10 @@ function Onboarding() {
 
             <button
               disabled={!platform}
-              onClick={() => setStep(1)}
+              onClick={() => navigate({ to: "/app" })}
               className="pill-primary mt-auto w-full py-4 text-[17px] disabled:opacity-40"
             >
               Continue
-            </button>
-          </div>
-        ) : (
-          <div key="u" className="pop flex flex-1 flex-col">
-            <h1 className="display-md mt-16 text-center text-balance">
-              Choose a username
-            </h1>
-
-            <p className="mt-2 text-center text-[15px] text-muted-foreground">
-              This becomes your Whispr link.
-            </p>
-
-            <div className="card-soft mt-10 flex items-center px-5 py-4">
-              <span className="text-[19px] tracking-tight text-muted-foreground">
-                @
-              </span>
-
-              <input
-                autoFocus
-                value={username}
-                onChange={(e) =>
-                  setUsername(
-                    e.target.value.toLowerCase().replace(/\s/g, ""),
-                  )
-                }
-                onKeyDown={(e) =>
-                  e.key === "Enter" && valid && submit()
-                }
-                placeholder="yourname"
-                maxLength={24}
-                className="ml-0.5 flex-1 bg-transparent text-[19px] tracking-tight outline-none placeholder:text-muted-foreground/60"
-              />
-
-              {valid && (
-                <Check
-                  className="size-5 text-primary"
-                  strokeWidth={2.2}
-                />
-              )}
-            </div>
-
-            <p className="mt-3 text-center text-[13px] text-muted-foreground">
-              whispr.app/@{username || "yourname"}
-            </p>
-
-            {error && (
-              <p className="mt-3 text-center text-sm text-destructive">
-                {error}
-              </p>
-            )}
-
-            <button
-              disabled={!valid || loading}
-              onClick={submit}
-              className="pill-primary mt-auto w-full py-4 text-[17px] disabled:opacity-40"
-            >
-              {loading ? "Creating your Whispr..." : "Continue"}
             </button>
           </div>
         )}
